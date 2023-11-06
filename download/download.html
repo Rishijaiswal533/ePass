@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Token Status Checker</title>
+</head>
+<style>
+    .container-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .container-row input[type="text"] {
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .container-row input[type="button"] {
+        background-color: #2c5686;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .container-row input[type="button"]:hover {
+        background-color: #204161;
+    }
+
+    html {
+        background-color: #eaf1fb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    body {
+        background-color: #e1efff;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #row1 {
+        background-color: #2c5686;
+        text-align: center;
+    }
+
+    .container-fluid {
+        box-shadow: 0px 0px 10px rgba(91, 84, 232, 0.2);
+        margin-left: 8%;
+        margin-right: 8%;
+        background-color: white;
+    }
+
+    h1 {
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .container-row {
+        width: 60%;
+    }
+
+    #tokenStatus {
+        width: 30%;
+        margin-left: 35%;
+    }
+    .x {
+        border: 2px solid rgb(94, 90, 90);
+        width: 30%;
+        margin-left: 35%;
+        border-radius: 5px;
+        background-color: #d6e4f5;
+    }
+</style>
+<body>
+    <div class="container-fluid" style="width: 84%;">
+        <div class="container-fluid1">
+            <div class="row" id="row1">
+                <div class="col-12">
+                    <img src="../apply/logo.png" alt="Centered Image" class="custom-image" style="width: 100px;">
+                </div>
+            </div>
+        </div>
+        <h1>Please Enter Your Token ID below:</h1>
+        <div id="tokenStatus" class="container-row" style="background-color: #e3ebf6;">
+            <!-- Token status will be displayed here -->
+        </div>
+        <div class="x">
+            <div class="container-fluid11">
+                <br>
+                <div class="container-row" style="width: 100%;">
+                    <input type="text" id="token" placeholder="Token Number" required>
+                </div>
+                <div class="container-row" style="width: 100%;">
+                    <input type="button" value="Check Token" id="checkTokenButton">
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("checkTokenButton").addEventListener("click", function () {
+            var token = document.getElementById("token").value;
+            var tokenStatusElement = document.getElementById("tokenStatus");
+        
+            if (token.trim() === '') {
+                tokenStatusElement.innerHTML = "Please enter a token.";
+                return;
+            }
+        
+            // Make an AJAX request to check the token
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'download.php?token=' + token, true);
+        
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    tokenStatusElement.innerHTML = xhr.responseText;
+                } else {
+                    console.log("HTTP Status: " + xhr.status);
+                    console.log("Response: " + xhr.responseText); // Log the response
+                    tokenStatusElement.innerHTML = "Error checking the token.";
+                }
+            };
+        
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
