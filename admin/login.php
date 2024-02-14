@@ -5,16 +5,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     if ($district != "" && $email != "" && $password != "") {
-        $db_host = 'localhost';
-        $db_user = 'root';
-        $db_pass = '';
-        $db_name = 'token_status_db';
+       $host = "localhost";
+$username = "id21514481_root";
+$password = "Rishi@123";
+$database = "id21514481_db";
+$conn = mysqli_connect($host, $username, $password, $database);
 
-        $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+// Check if the connection was successful
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
         $sql = "SELECT password FROM users WHERE district = ? AND email = ?";
         if ($stmt = $conn->prepare($sql)) {
